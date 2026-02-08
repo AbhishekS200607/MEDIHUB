@@ -64,6 +64,23 @@
         </div>
 
         <div class="flex flex-col gap-2">
+          <label class="text-sm font-semibold text-[#121317] dark:text-gray-200">Specialization</label>
+          <select id="doctorSpecialization" class="w-full px-4 h-14 bg-background-light dark:bg-[#121520] border border-[#dcdee5] dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-base dark:text-white" required>
+            <option value="">Select specialization</option>
+            <option value="General Medicine">General Medicine</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Orthopedics">Orthopedics</option>
+            <option value="Dermatology">Dermatology</option>
+            <option value="ENT">ENT</option>
+            <option value="Gynecology">Gynecology</option>
+            <option value="Neurology">Neurology</option>
+            <option value="Psychiatry">Psychiatry</option>
+            <option value="Ophthalmology">Ophthalmology</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-2">
           <label class="text-sm font-semibold text-[#121317] dark:text-gray-200">Doctor Registration Code</label>
           <input id="doctorCode" class="w-full px-4 h-14 bg-background-light dark:bg-[#121520] border border-[#dcdee5] dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-base placeholder:text-[#656d86]/60 dark:text-white" placeholder="Enter admin code" type="password" required>
           <p class="text-xs text-[#656d86]">Contact admin for registration code</p>
@@ -94,8 +111,6 @@
     import { registerWithEmail } from './js/auth.js';
     import { showToast, showLoading, hideLoading } from './js/utils.js';
 
-    const DOCTOR_CODE = 'MEDIHUB2024'; // Change this to your secret code
-
     document.getElementById('doctorRegisterForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -105,13 +120,27 @@
         const name = document.getElementById('doctorName').value;
         const email = document.getElementById('doctorEmail').value;
         const password = document.getElementById('doctorPassword').value;
+        const specialization = document.getElementById('doctorSpecialization').value;
         const code = document.getElementById('doctorCode').value;
 
-        if (code !== DOCTOR_CODE) {
+        if (!specialization) {
+          throw new Error('Please select a specialization');
+        }
+
+        // Verify code with backend
+        const verifyResponse = await fetch('/api/admin/doctor-code/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+
+        const verifyData = await verifyResponse.json();
+        
+        if (!verifyData.valid) {
           throw new Error('Invalid registration code');
         }
 
-        await registerWithEmail(email, password, name, 'doctor');
+        await registerWithEmail(email, password, name, 'doctor', specialization);
         showToast('Doctor account created successfully!', 'success');
 
         setTimeout(() => {

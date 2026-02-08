@@ -1,177 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - MEDIHUB</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <title>MEDIHUB Admin Panel</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyArFO_pSZkO46nbDpYxsJPgaWJcGckWOQY",
+      authDomain: "zentra-4268c.firebaseapp.com",
+      databaseURL: "https://zentra-4268c-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "zentra-4268c",
+      storageBucket: "zentra-4268c.firebasestorage.app",
+      messagingSenderId: "381782975324",
+      appId: "1:381782975324:web:5608cfc6c3ecf4160f5799",
+      measurementId: "G-KPV0CV89G2"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1e3fae",
+            "background-light": "#f6f6f8",
+            "background-dark": "#121520",
+          },
+          fontFamily: {"display": ["Inter", "sans-serif"]},
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    body { font-family: 'Inter', sans-serif; }
+  </style>
 </head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">🏥 MEDIHUB</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <span class="nav-link" id="userName">Admin</span>
-          </li>
-          <li class="nav-item">
-            <button class="btn btn-outline-danger btn-sm" id="logoutBtn">Logout</button>
-          </li>
-        </ul>
+<body class="bg-background-light dark:bg-background-dark text-[#121317] dark:text-white min-h-screen">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-primary text-white flex flex-col shrink-0">
+      <div class="p-6 flex items-center gap-3">
+        <div class="bg-white/20 p-2 rounded-lg">
+          <span class="material-symbols-outlined text-white text-3xl">medical_services</span>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">MEDIHUB</h1>
+          <p class="text-white/60 text-xs font-medium uppercase tracking-wider">Health Systems</p>
+        </div>
       </div>
-    </div>
-  </nav>
+      <nav class="flex-1 px-4 py-4 space-y-1">
+        <div class="flex items-center gap-3 px-3 py-3 rounded-lg bg-white/10 text-white cursor-pointer" data-tab="appointments">
+          <span class="material-symbols-outlined">dashboard</span>
+          <p class="text-sm font-semibold">Dashboard</p>
+        </div>
+        <div class="flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:bg-white/5 hover:text-white cursor-pointer transition-colors" data-tab="patients">
+          <span class="material-symbols-outlined">person</span>
+          <p class="text-sm font-medium">Patients</p>
+        </div>
+        <div class="flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:bg-white/5 hover:text-white cursor-pointer transition-colors" data-tab="doctors">
+          <span class="material-symbols-outlined">clinical_notes</span>
+          <p class="text-sm font-medium">Doctors</p>
+        </div>
+        <div class="flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:bg-white/5 hover:text-white cursor-pointer transition-colors" data-tab="settings">
+          <span class="material-symbols-outlined">settings</span>
+          <p class="text-sm font-medium">Settings</p>
+        </div>
+      </nav>
+      <div class="p-4 border-t border-white/10">
+        <div class="flex items-center gap-3 px-3 py-3 rounded-lg text-white/70 hover:bg-white/5 hover:text-white cursor-pointer transition-colors" id="logoutBtn">
+          <span class="material-symbols-outlined">logout</span>
+          <p class="text-sm font-medium">Sign Out</p>
+        </div>
+      </div>
+    </aside>
 
-  <!-- Main Content -->
-  <div class="container my-4">
-    <!-- Tabs -->
-    <ul class="nav nav-tabs mb-4" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#patients" type="button">Patients</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reports" type="button">Reports</button>
-      </li>
-    </ul>
-
-    <!-- Tab Content -->
-    <div class="tab-content">
-      <!-- Patients Tab -->
-      <div class="tab-pane fade show active" id="patients" role="tabpanel">
-        <div class="card">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">👥 Patient Management</h5>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addPatientModal">
-              + Add Patient
-            </button>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-y-auto">
+      <!-- Header -->
+      <header class="flex items-center justify-between px-8 py-4 bg-white dark:bg-background-dark border-b border-[#dcdee5] dark:border-white/10 sticky top-0 z-10">
+        <div class="flex items-center gap-4 w-1/3">
+          <div class="relative w-full">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#656d86]">search</span>
+            <input class="w-full pl-10 pr-4 py-2 bg-[#f0f1f4] dark:bg-white/5 border-none rounded-lg focus:ring-2 focus:ring-primary text-sm" placeholder="Search..." type="text" id="searchInput">
           </div>
-          <div class="card-body">
-            <!-- Search -->
-            <div class="mb-3">
-              <input type="text" class="form-control" id="searchPatient" placeholder="Search patients by name...">
-            </div>
+        </div>
+        <div class="flex items-center gap-3 pl-2">
+          <div class="text-right">
+            <p class="text-sm font-bold leading-none" id="adminName">Admin</p>
+            <p class="text-xs text-[#656d86] mt-1">Administrator</p>
+          </div>
+          <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary">person</span>
+          </div>
+        </div>
+      </header>
 
-            <!-- Patients Table -->
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Created</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="patientsTableBody">
-                  <tr>
-                    <td colspan="5" class="text-center">Loading patients...</td>
-                  </tr>
-                </tbody>
-              </table>
+      <div class="p-8 space-y-8">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white dark:bg-white/5 p-6 rounded-xl border border-[#dcdee5] dark:border-white/10">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm font-medium text-[#656d86]">Total Appointments</p>
+                <p class="text-3xl font-black mt-1" id="totalAppointments">0</p>
+              </div>
+              <div class="bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 px-2 py-1 rounded text-xs font-bold">Today</div>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-white/5 p-6 rounded-xl border border-[#dcdee5] dark:border-white/10">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm font-medium text-[#656d86]">Total Patients</p>
+                <p class="text-3xl font-black mt-1" id="totalPatients">0</p>
+              </div>
+              <div class="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-bold">Active</div>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-white/5 p-6 rounded-xl border border-[#dcdee5] dark:border-white/10">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm font-medium text-[#656d86]">Total Doctors</p>
+                <p class="text-3xl font-black mt-1" id="totalDoctors">0</p>
+              </div>
+              <div class="bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 px-2 py-1 rounded text-xs font-bold">Staff</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Reports Tab -->
-      <div class="tab-pane fade" id="reports" role="tabpanel">
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-0">📊 Today's Statistics</h5>
-              </div>
-              <div class="card-body">
-                <div class="stat-card mb-3">
-                  <div class="stat-number" id="todayAppointments">0</div>
-                  <div class="stat-label">Total Appointments</div>
-                </div>
-                <div class="stat-card mb-3" style="border-left-color: var(--success-color);">
-                  <div class="stat-number" style="color: var(--success-color);" id="todayCompleted">0</div>
-                  <div class="stat-label">Completed</div>
-                </div>
-                <div class="stat-card" style="border-left-color: var(--warning-color);">
-                  <div class="stat-number" style="color: var(--warning-color);" id="todayPending">0</div>
-                  <div class="stat-label">Pending</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 mb-4">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-0">📈 System Overview</h5>
-              </div>
-              <div class="card-body">
-                <div class="stat-card mb-3" style="border-left-color: var(--info-color);">
-                  <div class="stat-number" style="color: var(--info-color);" id="totalPatients">0</div>
-                  <div class="stat-label">Total Patients</div>
-                </div>
-                <div class="stat-card" style="border-left-color: var(--success-color);">
-                  <div class="stat-number" style="color: var(--success-color);" id="totalDoctors">0</div>
-                  <div class="stat-label">Total Doctors</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Tab Content -->
+        <div id="tabContent"></div>
       </div>
-    </div>
+    </main>
   </div>
 
   <!-- Add Patient Modal -->
-  <div class="modal fade" id="addPatientModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Add New Patient</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <div id="addPatientModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-background-dark rounded-xl max-w-md w-full p-6">
+      <h3 class="text-xl font-bold mb-4">Add New Patient</h3>
+      <form id="addPatientForm" class="space-y-4">
+        <input type="text" id="patientName" placeholder="Full Name" class="w-full px-4 py-2 border rounded-lg" required>
+        <input type="tel" id="patientPhone" placeholder="Phone" class="w-full px-4 py-2 border rounded-lg" required>
+        <input type="email" id="patientEmail" placeholder="Email" class="w-full px-4 py-2 border rounded-lg">
+        <textarea id="patientAddress" placeholder="Address" class="w-full px-4 py-2 border rounded-lg" rows="2"></textarea>
+        <div class="flex gap-2">
+          <button type="button" class="flex-1 px-4 py-2 border rounded-lg" onclick="closeModal('addPatientModal')">Cancel</button>
+          <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg">Save</button>
         </div>
-        <div class="modal-body">
-          <form id="addPatientForm">
-            <div class="mb-3">
-              <label for="patientName" class="form-label">Full Name *</label>
-              <input type="text" class="form-control" id="patientName" required>
-            </div>
-            <div class="mb-3">
-              <label for="patientPhone" class="form-label">Phone *</label>
-              <input type="tel" class="form-control" id="patientPhone" required>
-            </div>
-            <div class="mb-3">
-              <label for="patientEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="patientEmail">
-            </div>
-            <div class="mb-3">
-              <label for="patientAddress" class="form-label">Address</label>
-              <textarea class="form-control" id="patientAddress" rows="2"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="patientHistory" class="form-label">Medical History</label>
-              <textarea class="form-control" id="patientHistory" rows="3"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="savePatientBtn">Save Patient</button>
-        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Custom Code Modal -->
+  <div id="customCodeModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-background-dark rounded-xl max-w-md w-full p-6">
+      <h3 class="text-xl font-bold mb-4">Set Custom Registration Code</h3>
+      <input type="text" id="customCode" placeholder="Enter code (min 6 chars)" class="w-full px-4 py-2 border rounded-lg mb-4" minlength="6">
+      <div class="flex gap-2">
+        <button type="button" class="flex-1 px-4 py-2 border rounded-lg" onclick="closeModal('customCodeModal')">Cancel</button>
+        <button type="button" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg" id="saveCustomCodeBtn">Save</button>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module">
-    import { requireAuth, getUserProfile, logout, apiCall, showToast, showLoading, hideLoading, formatDate } from './js/utils.js';
+    import { requireAuth, getUserProfile, logout, apiCall, showToast, formatDate } from './js/utils.js';
 
-    let addPatientModal;
+    let currentTab = 'appointments';
+    let allPatients = [];
+    let allDoctors = [];
+    let allAppointments = [];
 
     async function init() {
       const user = await requireAuth();
@@ -180,140 +186,403 @@
       const profile = await getUserProfile();
       if (!profile) return;
 
+      console.log('User profile:', profile); // Debug log
+
       if (profile.role !== 'admin') {
-        showToast('Access denied. Admin role required.', 'error');
-        setTimeout(() => window.location.href = '/', 2000);
+        showToast('Access denied. Admin role required. Your role: ' + profile.role, 'error');
+        console.error('Access denied. Expected role: admin, Got:', profile.role);
+        // Don't redirect, just show error
         return;
       }
 
-      document.getElementById('userName').textContent = profile.name;
-
-      addPatientModal = new bootstrap.Modal(document.getElementById('addPatientModal'));
-
-      loadPatients();
-      loadReports();
-
+      document.getElementById('adminName').textContent = profile.name;
+      
       document.getElementById('logoutBtn').addEventListener('click', logout);
-      document.getElementById('savePatientBtn').addEventListener('click', savePatient);
-      
-      let searchTimeout;
-      document.getElementById('searchPatient').addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => searchPatients(e.target.value), 500);
+      document.querySelectorAll('[data-tab]').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
       });
+
+      document.getElementById('addPatientForm').addEventListener('submit', savePatient);
+      document.getElementById('saveCustomCodeBtn').addEventListener('click', saveCustomCode);
+      document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+      await loadData();
+      switchTab('appointments');
     }
 
-    async function loadPatients() {
+    async function loadData() {
       try {
-        const data = await apiCall('/patients');
-        renderPatients(data.patients);
+        const [patientsData, doctorsData, usersData] = await Promise.all([
+          apiCall('/patients'),
+          apiCall('/admin/doctors'),
+          apiCall('/admin/users?role=patient')
+        ]);
+        
+        allPatients = patientsData.patients || [];
+        allDoctors = doctorsData.doctors || [];
+        
+        const patientUsers = usersData.users || [];
+        const totalPatients = allPatients.length + patientUsers.length;
+        
+        console.log('Data loaded:', {
+          patientsFromCollection: allPatients.length,
+          registeredPatientUsers: patientUsers.length,
+          totalPatients,
+          doctors: allDoctors.length
+        });
+        
+        document.getElementById('totalPatients').textContent = totalPatients;
+        document.getElementById('totalDoctors').textContent = allDoctors.length;
       } catch (error) {
-        showToast('Failed to load patients', 'error');
+        console.error('Load data error:', error);
       }
     }
 
-    function renderPatients(patients) {
-      const tbody = document.getElementById('patientsTableBody');
-      
-      if (patients.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No patients found</td></tr>';
-        return;
-      }
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('[data-tab]').forEach(btn => {
+        btn.classList.toggle('bg-white/10', btn.dataset.tab === tab);
+        btn.classList.toggle('text-white', btn.dataset.tab === tab);
+        btn.classList.toggle('text-white/70', btn.dataset.tab !== tab);
+      });
 
-      tbody.innerHTML = patients.map(patient => {
-        const name = document.createElement('div');
-        name.textContent = patient.name;
-        const phone = document.createElement('div');
-        phone.textContent = patient.phone;
-        const email = document.createElement('div');
-        email.textContent = patient.email || '-';
-        
-        return `
-        <tr>
-          <td>${name.textContent}</td>
-          <td>${phone.textContent}</td>
-          <td>${email.textContent}</td>
-          <td>${formatDate(patient.createdAt)}</td>
-          <td>
-            <button class="btn btn-sm btn-outline-danger" onclick="deletePatient('${patient.id}')">Delete</button>
+      const content = document.getElementById('tabContent');
+      
+      if (tab === 'appointments') renderAppointments(content);
+      else if (tab === 'patients') renderPatients(content);
+      else if (tab === 'doctors') renderDoctors(content);
+      else if (tab === 'settings') renderSettings(content);
+    }
+
+    function renderAppointments(container) {
+      container.innerHTML = `
+        <div class="bg-white dark:bg-white/5 rounded-xl border border-[#dcdee5] dark:border-white/10 overflow-hidden">
+          <div class="px-6 py-4 border-b border-[#dcdee5] dark:border-white/10">
+            <h3 class="text-lg font-bold">Recent Appointments</h3>
+          </div>
+          <div class="p-6 text-center text-gray-500">
+            <p>Appointment management coming soon</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPatients(container) {
+      container.innerHTML = `
+        <div class="bg-white dark:bg-white/5 rounded-xl border border-[#dcdee5] dark:border-white/10 overflow-hidden">
+          <div class="px-6 py-4 border-b border-[#dcdee5] dark:border-white/10 flex justify-between items-center">
+            <h3 class="text-lg font-bold">Patient Management</h3>
+            <button onclick="openModal('addPatientModal')" class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold">+ Add Patient</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50 dark:bg-white/5">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-bold uppercase text-gray-500">Name</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold uppercase text-gray-500">Phone</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold uppercase text-gray-500">Email</th>
+                  <th class="px-6 py-3 text-right text-xs font-bold uppercase text-gray-500">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="patientsTable" class="divide-y divide-gray-200 dark:divide-white/10"></tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      updatePatientsTable();
+    }
+
+    function updatePatientsTable() {
+      const tbody = document.getElementById('patientsTable');
+      if (!tbody) return;
+      
+      tbody.innerHTML = allPatients.map(p => `
+        <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+          <td class="px-6 py-4 text-sm font-medium">${escapeHtml(p.name)}</td>
+          <td class="px-6 py-4 text-sm">${escapeHtml(p.phone)}</td>
+          <td class="px-6 py-4 text-sm">${escapeHtml(p.email || '-')}</td>
+          <td class="px-6 py-4 text-right">
+            <button onclick="deletePatient('${p.id}')" class="text-red-600 hover:text-red-800 text-sm font-medium">Delete</button>
           </td>
         </tr>
-      `}).join('');
+      `).join('');
     }
 
-    async function savePatient() {
-      const btn = document.getElementById('savePatientBtn');
-      showLoading(btn);
+    function renderDoctors(container) {
+      container.innerHTML = `
+        <div class="bg-white dark:bg-white/5 rounded-xl border border-[#dcdee5] dark:border-white/10 overflow-hidden">
+          <div class="px-6 py-4 border-b border-[#dcdee5] dark:border-white/10">
+            <h3 class="text-lg font-bold">Doctor Management</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50 dark:bg-white/5">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-bold uppercase text-gray-500">Name</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold uppercase text-gray-500">Email</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold uppercase text-gray-500">Specialization</th>
+                  <th class="px-6 py-3 text-left text-xs font-bold uppercase text-gray-500">Status</th>
+                  <th class="px-6 py-3 text-right text-xs font-bold uppercase text-gray-500">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="doctorsTable" class="divide-y divide-gray-200 dark:divide-white/10"></tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      updateDoctorsTable();
+    }
 
+    function updateDoctorsTable() {
+      const tbody = document.getElementById('doctorsTable');
+      if (!tbody) return;
+      
+      tbody.innerHTML = allDoctors.map(d => {
+        const active = d.active !== false;
+        return `
+          <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+            <td class="px-6 py-4 text-sm font-medium">${escapeHtml(d.name)}</td>
+            <td class="px-6 py-4 text-sm">${escapeHtml(d.email)}</td>
+            <td class="px-6 py-4 text-sm">${escapeHtml(d.specialization || '-')}</td>
+            <td class="px-6 py-4">
+              <span class="px-2 py-1 rounded-full text-xs font-bold ${active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                ${active ? 'Active' : 'Restricted'}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right space-x-2">
+              <button onclick="toggleDoctor('${d.id}', ${!active})" class="text-sm font-medium ${active ? 'text-orange-600' : 'text-green-600'}">
+                ${active ? 'Restrict' : 'Activate'}
+              </button>
+              <button onclick="deleteDoctor('${d.id}')" class="text-red-600 hover:text-red-800 text-sm font-medium">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderSettings(container) {
+      loadDoctorCode();
+      loadHospitalConfig();
+      container.innerHTML = `
+        <div class="space-y-6">
+          <!-- Hospital Information -->
+          <div class="bg-white dark:bg-white/5 rounded-xl border border-[#dcdee5] dark:border-white/10 p-6">
+            <h3 class="text-lg font-bold mb-6">Hospital Information</h3>
+            <form id="hospitalConfigForm" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium mb-2">Hospital Name</label>
+                <input type="text" id="hospitalName" class="w-full px-4 py-2 border rounded-lg" placeholder="Enter hospital name" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2">Address</label>
+                <textarea id="hospitalAddress" class="w-full px-4 py-2 border rounded-lg" rows="2" placeholder="Enter hospital address" required></textarea>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Phone Number</label>
+                  <input type="tel" id="hospitalPhone" class="w-full px-4 py-2 border rounded-lg" placeholder="+1 234 567 8900" required>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">Email</label>
+                  <input type="email" id="hospitalEmail" class="w-full px-4 py-2 border rounded-lg" placeholder="info@hospital.com" required>
+                </div>
+              </div>
+              <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg text-sm font-bold">Save Hospital Info</button>
+            </form>
+          </div>
+
+          <!-- Doctor Registration Code -->
+          <div class="bg-white dark:bg-white/5 rounded-xl border border-[#dcdee5] dark:border-white/10 p-6">
+            <h3 class="text-lg font-bold mb-6">Doctor Registration Settings</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium mb-2">Current Registration Code</label>
+                <div class="flex gap-2">
+                  <input type="text" id="currentCode" readonly class="flex-1 px-4 py-2 border rounded-lg bg-gray-50">
+                  <button id="toggleCodeBtn" class="px-4 py-2 border rounded-lg">👁️</button>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <button id="generateCodeBtn" class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold">🔄 Generate Random</button>
+                <button onclick="openModal('customCodeModal')" class="px-4 py-2 border rounded-lg text-sm font-bold">✏️ Set Custom</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('toggleCodeBtn').addEventListener('click', toggleCodeVisibility);
+      document.getElementById('generateCodeBtn').addEventListener('click', generateRandomCode);
+      document.getElementById('hospitalConfigForm').addEventListener('submit', saveHospitalConfig);
+    }
+
+    let codeVisible = false;
+    async function loadDoctorCode() {
       try {
-        const patient = {
-          name: document.getElementById('patientName').value,
-          phone: document.getElementById('patientPhone').value,
-          email: document.getElementById('patientEmail').value,
-          address: document.getElementById('patientAddress').value,
-          medicalHistory: document.getElementById('patientHistory').value
-        };
-
-        await apiCall('/patients', {
-          method: 'POST',
-          body: JSON.stringify(patient)
-        });
-
-        showToast('Patient added successfully', 'success');
-        addPatientModal.hide();
-        document.getElementById('addPatientForm').reset();
-        loadPatients();
+        const data = await apiCall('/admin/doctor-code');
+        const input = document.getElementById('currentCode');
+        if (input) {
+          input.value = '••••••••••';
+          input.dataset.realCode = data.code;
+        }
       } catch (error) {
-        showToast(error.message, 'error');
-      } finally {
-        hideLoading(btn);
+        console.error('Load code error:', error);
       }
     }
 
-    window.deletePatient = async (patientId) => {
-      if (!confirm('Are you sure you want to delete this patient?')) return;
+    function toggleCodeVisibility() {
+      const input = document.getElementById('currentCode');
+      codeVisible = !codeVisible;
+      input.value = codeVisible ? input.dataset.realCode : '••••••••••';
+      document.getElementById('toggleCodeBtn').textContent = codeVisible ? '🙈' : '👁️';
+    }
 
+    async function generateRandomCode() {
+      if (!confirm('Generate new code? This will invalidate the old one.')) return;
       try {
-        await apiCall(`/patients/${patientId}`, { method: 'DELETE' });
-        showToast('Patient deleted successfully', 'success');
-        loadPatients();
+        const data = await apiCall('/admin/doctor-code/generate', { method: 'POST' });
+        document.getElementById('currentCode').dataset.realCode = data.code;
+        codeVisible = true;
+        toggleCodeVisibility();
+        showToast('New code generated!', 'success');
+      } catch (error) {
+        showToast(error.message, 'error');
+      }
+    }
+
+    async function saveCustomCode() {
+      const code = document.getElementById('customCode').value.trim();
+      if (code.length < 6) return showToast('Code must be at least 6 characters', 'error');
+      
+      try {
+        await apiCall('/admin/doctor-code', { method: 'PUT', body: JSON.stringify({ code }) });
+        document.getElementById('currentCode').dataset.realCode = code;
+        closeModal('customCodeModal');
+        showToast('Code updated!', 'success');
+      } catch (error) {
+        showToast(error.message, 'error');
+      }
+    }
+
+    async function loadHospitalConfig() {
+      try {
+        const data = await apiCall('/admin/hospital-config');
+        if (data.config) {
+          document.getElementById('hospitalName').value = data.config.name || '';
+          document.getElementById('hospitalAddress').value = data.config.address || '';
+          document.getElementById('hospitalPhone').value = data.config.phone || '';
+          document.getElementById('hospitalEmail').value = data.config.email || '';
+        }
+      } catch (error) {
+        console.error('Load hospital config error:', error);
+      }
+    }
+
+    async function saveHospitalConfig(e) {
+      e.preventDefault();
+      try {
+        await apiCall('/admin/hospital-config', {
+          method: 'PUT',
+          body: JSON.stringify({
+            name: document.getElementById('hospitalName').value,
+            address: document.getElementById('hospitalAddress').value,
+            phone: document.getElementById('hospitalPhone').value,
+            email: document.getElementById('hospitalEmail').value
+          })
+        });
+        showToast('Hospital information updated!', 'success');
+      } catch (error) {
+        showToast(error.message, 'error');
+      }
+    }
+
+    async function savePatient(e) {
+      e.preventDefault();
+      try {
+        await apiCall('/patients', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: document.getElementById('patientName').value,
+            phone: document.getElementById('patientPhone').value,
+            email: document.getElementById('patientEmail').value,
+            address: document.getElementById('patientAddress').value
+          })
+        });
+        closeModal('addPatientModal');
+        e.target.reset();
+        await loadData();
+        if (currentTab === 'patients') updatePatientsTable();
+        showToast('Patient added!', 'success');
+      } catch (error) {
+        showToast(error.message, 'error');
+      }
+    }
+
+    window.deletePatient = async (id) => {
+      if (!confirm('Delete this patient?')) return;
+      try {
+        await apiCall(`/patients/${id}`, { method: 'DELETE' });
+        await loadData();
+        updatePatientsTable();
+        showToast('Patient deleted', 'success');
       } catch (error) {
         showToast(error.message, 'error');
       }
     };
 
-    async function searchPatients(query) {
-      if (!query) {
-        loadPatients();
-        return;
-      }
-
+    window.toggleDoctor = async (id, active) => {
       try {
-        const data = await apiCall(`/patients/search?q=${encodeURIComponent(query)}`);
-        renderPatients(data.patients);
+        await apiCall(`/admin/doctors/${id}/status`, { method: 'PUT', body: JSON.stringify({ active }) });
+        await loadData();
+        updateDoctorsTable();
+        showToast(`Doctor ${active ? 'activated' : 'restricted'}`, 'success');
       } catch (error) {
-        console.error('Search error:', error);
+        showToast(error.message, 'error');
       }
+    };
+
+    window.deleteDoctor = async (id) => {
+      if (!confirm('Delete this doctor? This will also delete their appointments.')) return;
+      try {
+        await apiCall(`/admin/doctors/${id}`, { method: 'DELETE' });
+        await loadData();
+        updateDoctorsTable();
+        showToast('Doctor deleted', 'success');
+      } catch (error) {
+        showToast(error.message, 'error');
+      }
+    };
+
+    window.openModal = (id) => document.getElementById(id).classList.remove('hidden');
+    window.closeModal = (id) => document.getElementById(id).classList.add('hidden');
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
 
-    async function loadReports() {
-      try {
-        // Load patients count
-        const patientsData = await apiCall('/patients');
-        document.getElementById('totalPatients').textContent = patientsData.patients.length;
-
-        // Load doctors count
-        const doctorsResponse = await fetch('/api/doctors');
-        const doctorsData = await doctorsResponse.json();
-        document.getElementById('totalDoctors').textContent = doctorsData.doctors.length;
-
-        // Note: For appointment stats, you'd need to add an endpoint
-        // This is a simplified version
-        document.getElementById('todayAppointments').textContent = '-';
-        document.getElementById('todayCompleted').textContent = '-';
-        document.getElementById('todayPending').textContent = '-';
-      } catch (error) {
-        console.error('Failed to load reports:', error);
+    function handleSearch(e) {
+      const query = e.target.value.toLowerCase();
+      if (currentTab === 'patients') {
+        const filtered = allPatients.filter(p => 
+          p.name.toLowerCase().includes(query) || 
+          p.phone.includes(query) || 
+          (p.email && p.email.toLowerCase().includes(query))
+        );
+        const tbody = document.getElementById('patientsTable');
+        if (tbody) {
+          tbody.innerHTML = filtered.map(p => `
+            <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+              <td class="px-6 py-4 text-sm font-medium">${escapeHtml(p.name)}</td>
+              <td class="px-6 py-4 text-sm">${escapeHtml(p.phone)}</td>
+              <td class="px-6 py-4 text-sm">${escapeHtml(p.email || '-')}</td>
+              <td class="px-6 py-4 text-right">
+                <button onclick="deletePatient('${p.id}')" class="text-red-600 hover:text-red-800 text-sm font-medium">Delete</button>
+              </td>
+            </tr>
+          `).join('');
+        }
       }
     }
 

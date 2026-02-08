@@ -40,6 +40,11 @@ function requireRole(...roles) {
         return res.status(403).json({ error: 'Insufficient permissions' });
       }
       
+      // Check if doctor is active
+      if (userData.role === 'doctor' && userData.active === false) {
+        return res.status(403).json({ error: 'Your account has been restricted. Contact admin.' });
+      }
+      
       next();
     } catch (error) {
       console.error('Role check error:', error);

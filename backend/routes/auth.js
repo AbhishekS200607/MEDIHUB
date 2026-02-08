@@ -6,7 +6,7 @@ const { verifyToken } = require('../middleware/auth');
 // Register user (create user profile in Firestore)
 router.post('/register', verifyToken, async (req, res) => {
   try {
-    const { name, phone, role } = req.body;
+    const { name, phone, role, specialization } = req.body;
     
     if (!name) {
       return res.status(400).json({ error: 'Name is required' });
@@ -23,6 +23,11 @@ router.post('/register', verifyToken, async (req, res) => {
       phone: phone || '',
       createdAt: new Date().toISOString()
     };
+    
+    // Add specialization for doctors
+    if (userRole === 'doctor' && specialization) {
+      userData.specialization = specialization;
+    }
     
     await db.collection('users').doc(req.user.uid).set(userData);
     

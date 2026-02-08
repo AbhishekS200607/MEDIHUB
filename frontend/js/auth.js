@@ -18,20 +18,23 @@ export async function loginWithEmail(email, password) {
 }
 
 // Register with email/password
-export async function registerWithEmail(email, password, name, role = 'patient') {
+export async function registerWithEmail(email, password, name, role = 'patient', specialization = null) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     
     // Create user profile
     const token = await user.getIdToken();
+    const body = { name, role };
+    if (specialization) body.specialization = specialization;
+    
     const response = await fetch('/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ name, role })
+      body: JSON.stringify(body)
     });
     
     if (!response.ok) {
@@ -109,11 +112,26 @@ if (document.getElementById('loginForm')) {
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
       
-      await loginWithEmail(email, password);
+      const user = await loginWithEmail(email, password);
+      const token = await user.getIdToken();
+      
+      // Get user profile to check role
+      const profileResponse = await fetch('/api/auth/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const profileData = await profileResponse.json();
+      
       showToast('Login successful!', 'success');
       
       setTimeout(() => {
-        window.location.href = '/';
+        // Redirect based on role
+        if (profileData.user.role === 'admin') {
+          window.location.href = '/admin.html';
+        } else if (profileData.user.role === 'doctor') {
+          window.location.href = '/doctor.html';
+        } else {
+          window.location.href = '/';
+        }
       }, 1000);
     } catch (error) {
       showToast(error.message, 'error');
