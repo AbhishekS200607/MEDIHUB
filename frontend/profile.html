@@ -43,23 +43,8 @@
             <p class="text-slate-500 text-xs font-medium">Hospital Management</p>
           </div>
         </div>
-        <nav class="flex flex-col gap-2">
-          <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="/">
-            <span class="material-symbols-outlined">dashboard</span>
-            <p class="text-sm font-medium">Dashboard</p>
-          </a>
-          <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="/">
-            <span class="material-symbols-outlined">calendar_today</span>
-            <p class="text-sm font-medium">Appointments</p>
-          </a>
-          <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="/medical-records.html">
-            <span class="material-symbols-outlined">description</span>
-            <p class="text-sm font-medium">Medical Records</p>
-          </a>
-          <a class="active-nav flex items-center gap-3 px-4 py-3 rounded-lg transition-colors" href="/profile.html">
-            <span class="material-symbols-outlined">person</span>
-            <p class="text-sm font-semibold">My Profile</p>
-          </a>
+        <nav class="flex flex-col gap-2" id="sidebarNav">
+          <!-- Navigation will be populated based on role -->
         </nav>
       </div>
       <button class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors border border-transparent hover:border-red-100" id="logoutBtn">
@@ -126,6 +111,9 @@
         document.getElementById('displayEmail').textContent = profile.email;
         document.getElementById('displayRole').textContent = profile.role;
         
+        // Render role-specific sidebar
+        renderSidebar(profile.role);
+        
         if (profile.createdAt) {
           const date = new Date(profile.createdAt.seconds * 1000);
           document.getElementById('displayDate').textContent = date.toLocaleDateString('en-US', { 
@@ -137,6 +125,50 @@
       }
 
       document.getElementById('logoutBtn').addEventListener('click', logout);
+    }
+    
+    function renderSidebar(role) {
+      const nav = document.getElementById('sidebarNav');
+      
+      if (role === 'doctor') {
+        nav.innerHTML = `
+          <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="/doctor.html">
+            <span class="material-symbols-outlined">dashboard</span>
+            <p class="text-sm font-medium">Dashboard</p>
+          </a>
+          <a class="active-nav flex items-center gap-3 px-4 py-3 rounded-lg transition-colors" href="/profile.html">
+            <span class="material-symbols-outlined">person</span>
+            <p class="text-sm font-semibold">My Profile</p>
+          </a>
+        `;
+      } else if (role === 'admin') {
+        nav.innerHTML = `
+          <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="/admin.html">
+            <span class="material-symbols-outlined">dashboard</span>
+            <p class="text-sm font-medium">Dashboard</p>
+          </a>
+          <a class="active-nav flex items-center gap-3 px-4 py-3 rounded-lg transition-colors" href="/profile.html">
+            <span class="material-symbols-outlined">person</span>
+            <p class="text-sm font-semibold">My Profile</p>
+          </a>
+        `;
+      } else {
+        // Patient
+        nav.innerHTML = `
+          <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="/">
+            <span class="material-symbols-outlined">dashboard</span>
+            <p class="text-sm font-medium">Dashboard</p>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="/medical-records.html">
+            <span class="material-symbols-outlined">description</span>
+            <p class="text-sm font-medium">Medical Records</p>
+          </a>
+          <a class="active-nav flex items-center gap-3 px-4 py-3 rounded-lg transition-colors" href="/profile.html">
+            <span class="material-symbols-outlined">person</span>
+            <p class="text-sm font-semibold">My Profile</p>
+          </a>
+        `;
+      }
     }
     
     init();
