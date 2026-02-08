@@ -1,7 +1,21 @@
 const admin = require('firebase-admin');
 
 // Initialize Firebase Admin
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+let serviceAccount;
+
+// Try to load from file first (Render Secret File), then from env variable
+try {
+  serviceAccount = require('../serviceAccount.json');
+  console.log('✅ Loaded Firebase credentials from file');
+} catch (error) {
+  try {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || '{}');
+    console.log('✅ Loaded Firebase credentials from environment variable');
+  } catch (parseError) {
+    console.error('❌ Failed to load Firebase credentials');
+    throw new Error('Firebase credentials not found');
+  }
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
