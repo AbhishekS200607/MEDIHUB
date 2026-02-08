@@ -1,6 +1,26 @@
 # 🏥 MEDIHUB - Hospital Management System
 
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-success?style=for-the-badge)](https://medihub-6uz6.onrender.com)
+[![GitHub Stars](https://img.shields.io/github/stars/AbhishekS200607/MEDIHUB?style=for-the-badge)](https://github.com/AbhishekS200607/MEDIHUB)
+
+> **🌐 Live Application:** [https://medihub-6uz6.onrender.com](https://medihub-6uz6.onrender.com)
+
 A complete, production-ready hospital management web application with real-time appointment booking, queue management, and patient records.
+
+---
+
+## 🎯 Quick Access
+
+| Role | Access | Credentials |
+|------|--------|-------------|
+| 🏥 **Live Demo** | [medihub-6uz6.onrender.com](https://medihub-6uz6.onrender.com) | Register to get started |
+| 👤 **Patient** | `/login` | Register with email |
+| 👨⚕️ **Doctor** | `/doctor-register.html` | Requires admin code |
+| 👨💼 **Admin** | `/admin.html` | Create via Firestore |
+
+> ⚠️ **Note:** First load may take 30 seconds (free tier spins down after inactivity)
+
+---
 
 ## 🚀 Features
 
@@ -60,7 +80,7 @@ MEDIHUB/
 - **Backend**: Node.js, Express.js
 - **Database**: Firebase Firestore (NoSQL)
 - **Authentication**: Firebase Authentication
-- **Hosting**: Render-ready
+- **Hosting**: Render
 
 ## 📋 Prerequisites
 
@@ -73,7 +93,7 @@ MEDIHUB/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/AbhishekS200607/MEDIHUB.git
 cd MEDIHUB
 ```
 
@@ -301,7 +321,7 @@ tokens/{doctorId_date}
 
 MIT License - feel free to use for your projects!
 
-## 👨‍💻 Author
+## 👨💻 Author
 
 Built with ❤️ for modern healthcare management
 
