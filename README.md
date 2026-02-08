@@ -1,3 +1,5 @@
+![MEDIHUB Cover](./cover.svg)
+
 # 🏥 MEDIHUB - Hospital Management System
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-success?style=for-the-badge)](https://medihub-6uz6.onrender.com)
