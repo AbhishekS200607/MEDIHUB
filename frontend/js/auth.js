@@ -18,14 +18,14 @@ export async function loginWithEmail(email, password) {
 }
 
 // Register with email/password
-export async function registerWithEmail(email, password, name, role = 'patient', specialization = null) {
+export async function registerWithEmail(email, password, name, role = 'patient', specialization = null, phone = '') {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     
     // Create user profile
     const token = await user.getIdToken();
-    const body = { name, role };
+    const body = { name, role, phone };
     if (specialization) body.specialization = specialization;
     
     const response = await fetch('/api/auth/register', {
@@ -147,10 +147,11 @@ if (document.getElementById('loginForm')) {
     
     try {
       const name = document.getElementById('registerName').value;
+      const phone = document.getElementById('registerPhone').value;
       const email = document.getElementById('registerEmail').value;
       const password = document.getElementById('registerPassword').value;
       
-      await registerWithEmail(email, password, name);
+      await registerWithEmail(email, password, name, 'patient', null, phone);
       showToast('Registration successful!', 'success');
       
       setTimeout(() => {
