@@ -24,11 +24,21 @@ Your code is already on GitHub ✅
    - **Instance Type**: `Free`
 
 ### Step 4: Add Environment Variables
-Click **"Environment"** and add:
+Click **"Environment"** and add these variables **ONE BY ONE**:
 
+**IMPORTANT: For FIREBASE_SERVICE_ACCOUNT:**
+1. Get your service account JSON from Firebase Console
+2. **Minify it** (remove all line breaks and extra spaces)
+3. Paste as a single line
+
+**Example format:**
 ```
-FIREBASE_SERVICE_ACCOUNT={"type":"service_account","project_id":"zentra-4268c",...}
-SESSION_SECRET=your_random_secret_here
+FIREBASE_SERVICE_ACCOUNT={"type":"service_account","project_id":"zentra-4268c","private_key_id":"abc123","private_key":"-----BEGIN PRIVATE KEY-----\nYOUR_KEY_HERE\n-----END PRIVATE KEY-----\n","client_email":"firebase-adminsdk@zentra-4268c.iam.gserviceaccount.com","client_id":"123456789","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk%40zentra-4268c.iam.gserviceaccount.com"}
+```
+
+**Other variables:**
+```
+SESSION_SECRET=your_random_secret_here_min_32_chars
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX=100
 RATE_LIMIT_AUTH_MAX=100
@@ -38,9 +48,13 @@ PORT=3000
 ```
 
 **Get Firebase Service Account:**
-1. Go to Firebase Console → Project Settings
-2. Service Accounts → Generate New Private Key
-3. Copy entire JSON content
+1. Go to Firebase Console → Project Settings → Service Accounts
+2. Click "Generate New Private Key"
+3. Download JSON file
+4. Open in text editor
+5. Copy entire content
+6. **Remove all line breaks** (make it one line)
+7. Paste in Render
 
 ### Step 5: Deploy
 1. Click **"Create Web Service"**
@@ -148,6 +162,29 @@ Example: `http://192.168.1.100:3000`
 ---
 
 ## Troubleshooting
+
+### "Service account object must contain a string 'project_id' property"
+**This is the most common error!**
+
+**Solution:**
+1. Go to Render Dashboard → Your Service → Environment
+2. Delete the `FIREBASE_SERVICE_ACCOUNT` variable
+3. Get your Firebase service account JSON
+4. **Remove ALL line breaks** - make it ONE SINGLE LINE
+5. Use an online JSON minifier: https://codebeautify.org/jsonminifier
+6. Paste the minified JSON (should look like: `{"type":"service_account","project_id":"..."}`)
+7. Click "Save Changes"
+8. Redeploy
+
+**Alternative: Use File Upload (Easier)**
+1. In Render, go to "Environment" → "Secret Files"
+2. Click "Add Secret File"
+3. Filename: `serviceAccount.json`
+4. Upload your Firebase service account JSON file
+5. Update `backend/models/firebase.js` to use file instead:
+   ```javascript
+   const serviceAccount = require('../serviceAccount.json');
+   ```
 
 ### "Cannot connect to server"
 - Check if backend is running
