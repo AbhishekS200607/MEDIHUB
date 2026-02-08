@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us - MEDIHUB</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                primary: "#1e3fae",
+                "background-light": "#F8FAFC",
+                "background-dark": "#020617",
+            },
+            fontFamily: { display: ["Outfit", "sans-serif"] },
+        },
+    },
+};
+</script>
+<style>
+body { font-family: 'Outfit', sans-serif; }
+.timeline-item { opacity: 0; transform: translateY(50px); transition: all 0.6s ease-out; }
+.timeline-item.visible { opacity: 1; transform: translateY(0); }
+.glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.dark .glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<!-- Header -->
+<header class="fixed top-6 left-0 right-0 z-50 px-6">
+<nav class="max-w-6xl mx-auto flex items-center justify-between glass py-3 px-8 rounded-full shadow-lg" style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.3);">
+<a href="/" class="flex items-center gap-3">
+<span class="material-icons-round text-primary text-3xl">medical_services</span>
+<span class="font-bold text-xl text-primary dark:text-white">MEDIHUB</span>
+</a>
+<div class="hidden md:flex items-center gap-1 bg-white/40 dark:bg-black/20 p-1.5 rounded-full">
+<a class="px-6 py-2 rounded-full hover:bg-white/50 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all" href="/">Home</a>
+<a class="px-6 py-2 rounded-full bg-primary text-white font-medium text-sm transition-all" href="/about.html">About</a>
+<a class="px-6 py-2 rounded-full hover:bg-white/50 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all" href="/doctor-register.html">For Doctors</a>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full hover:bg-white/50 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round">dark_mode</span>
+</button>
+<a href="/login.html" class="bg-primary text-white px-8 py-2.5 rounded-full font-semibold text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+Login
+</a>
+</div>
+</nav>
+</header>
+
+<!-- Hero Section -->
+<section class="pt-32 pb-20 px-6 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800">
+<div class="max-w-4xl mx-auto text-center">
+<h1 class="text-5xl md:text-7xl font-extrabold text-primary dark:text-white mb-6">About MEDIHUB</h1>
+<p class="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">Revolutionizing healthcare management with technology, compassion, and innovation</p>
+</div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-16 px-6 bg-white dark:bg-slate-800">
+<div class="max-w-6xl mx-auto">
+<div class="grid md:grid-cols-3 gap-8 text-center">
+<div class="timeline-item">
+<div class="text-5xl font-extrabold text-primary mb-2">1,250+</div>
+<div class="text-slate-600 dark:text-slate-300 font-medium">Active Patients</div>
+<div class="flex items-center justify-center gap-2 mt-3">
+<div class="flex -space-x-2">
+<img src="https://i.pravatar.cc/40?img=1" class="w-8 h-8 rounded-full border-2 border-white" alt="Patient">
+<img src="https://i.pravatar.cc/40?img=2" class="w-8 h-8 rounded-full border-2 border-white" alt="Patient">
+<img src="https://i.pravatar.cc/40?img=3" class="w-8 h-8 rounded-full border-2 border-white" alt="Patient">
+</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="text-5xl font-extrabold text-primary mb-2">4.9<span class="text-yellow-500">★</span></div>
+<div class="text-slate-600 dark:text-slate-300 font-medium">Patient Satisfaction</div>
+<div class="flex items-center justify-center gap-1 mt-3">
+<span class="text-yellow-500 text-xl">★★★★★</span>
+</div>
+</div>
+<div class="timeline-item">
+<div class="text-5xl font-extrabold text-primary mb-2">24/7</div>
+<div class="text-slate-600 dark:text-slate-300 font-medium">System Availability</div>
+<div class="text-sm text-green-600 dark:text-green-400 font-semibold mt-3">99.9% Uptime</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="py-20 px-6">
+<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+<div class="timeline-item bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-lg">
+<div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+<span class="material-icons-round text-primary text-4xl">flag</span>
+</div>
+<h2 class="text-3xl font-bold mb-4 text-primary dark:text-white">Our Mission</h2>
+<p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">To provide accessible, efficient, and patient-centered healthcare management solutions that empower medical professionals and improve patient outcomes through innovative technology.</p>
+</div>
+<div class="timeline-item bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-lg">
+<div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+<span class="material-icons-round text-primary text-4xl">visibility</span>
+</div>
+<h2 class="text-3xl font-bold mb-4 text-primary dark:text-white">Our Vision</h2>
+<p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">To become the leading hospital management platform globally, transforming healthcare delivery through seamless integration of technology and human-centered care.</p>
+</div>
+</div>
+</section>
+
+<!-- Timeline -->
+<section class="py-20 px-6 bg-slate-50 dark:bg-slate-900">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-primary dark:text-white">Our Journey</h2>
+<div class="relative">
+<!-- Timeline Line -->
+<div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/30"></div>
+
+<!-- Timeline Items -->
+<div class="timeline-item relative pl-20 md:pl-0 md:w-1/2 md:pr-12 mb-16">
+<div class="absolute left-6 md:left-auto md:right-0 w-5 h-5 bg-primary rounded-full border-4 border-white dark:border-slate-900"></div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+<span class="text-primary font-bold text-sm">February 8, 2026</span>
+<h3 class="text-2xl font-bold mt-2 mb-3">Project Launch</h3>
+<p class="text-slate-600 dark:text-slate-300">• Real-time appointment booking system<br/>• Queue management with token generation<br/>• Patient records management<br/>• Role-based access (Patient, Doctor, Admin)<br/>• Firebase authentication & database<br/>• Secure rate limiting & data protection</p>
+</div>
+</div>
+
+<div class="timeline-item relative pl-20 md:pl-0 md:w-1/2 md:ml-auto md:pl-12 mb-16">
+<div class="absolute left-6 md:left-0 w-5 h-5 bg-primary rounded-full border-4 border-white dark:border-slate-900"></div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+<span class="text-primary font-bold text-sm">Q2 2026</span>
+<h3 class="text-2xl font-bold mt-2 mb-3">Notifications & Payments</h3>
+<p class="text-slate-600 dark:text-slate-300">Email & SMS notifications for appointments, reminders, and payment gateway integration for seamless billing.</p>
+</div>
+</div>
+
+<div class="timeline-item relative pl-20 md:pl-0 md:w-1/2 md:pr-12 mb-16">
+<div class="absolute left-6 md:left-auto md:right-0 w-5 h-5 bg-primary rounded-full border-4 border-white dark:border-slate-900"></div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+<span class="text-primary font-bold text-sm">Q3 2026</span>
+<h3 class="text-2xl font-bold mt-2 mb-3">Medical Records & Analytics</h3>
+<p class="text-slate-600 dark:text-slate-300">Upload and manage medical records, lab reports, prescriptions, and advanced analytics dashboard for insights.</p>
+</div>
+</div>
+
+<div class="timeline-item relative pl-20 md:pl-0 md:w-1/2 md:ml-auto md:pl-12 mb-16">
+<div class="absolute left-6 md:left-0 w-5 h-5 bg-primary rounded-full border-4 border-white dark:border-slate-900"></div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+<span class="text-primary font-bold text-sm">Q4 2026</span>
+<h3 class="text-2xl font-bold mt-2 mb-3">Telemedicine Integration</h3>
+<p class="text-slate-600 dark:text-slate-300">Video consultation feature enabling remote doctor-patient consultations with secure video calls.</p>
+</div>
+</div>
+
+<div class="timeline-item relative pl-20 md:pl-0 md:w-1/2 md:pr-12 mb-16">
+<div class="absolute left-6 md:left-auto md:right-0 w-5 h-5 bg-primary rounded-full border-4 border-white dark:border-slate-900"></div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg">
+<span class="text-primary font-bold text-sm">Q1 2027</span>
+<h3 class="text-2xl font-bold mt-2 mb-3">Mobile Applications</h3>
+<p class="text-slate-600 dark:text-slate-300">Native iOS and Android apps for patients and doctors with offline support and push notifications.</p>
+</div>
+</div>
+
+<div class="timeline-item relative pl-20 md:pl-0 md:w-1/2 md:ml-auto md:pl-12">
+<div class="absolute left-6 md:left-0 w-5 h-5 bg-primary rounded-full border-4 border-white dark:border-slate-900 animate-pulse"></div>
+<div class="bg-gradient-to-br from-primary to-indigo-600 p-6 rounded-2xl shadow-lg text-white">
+<span class="font-bold text-sm opacity-90">2027 & Beyond</span>
+<h3 class="text-2xl font-bold mt-2 mb-3">AI & Global Expansion</h3>
+<p class="opacity-90">AI-powered health insights, predictive diagnostics, multi-language support, and multi-hospital network capabilities.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Values -->
+<section class="py-20 px-6">
+<div class="max-w-6xl mx-auto">
+<h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-primary dark:text-white">Our Core Values</h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="timeline-item text-center p-8 bg-white dark:bg-slate-800 rounded-3xl shadow-lg">
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-icons-round text-primary text-5xl">favorite</span>
+</div>
+<h3 class="text-2xl font-bold mb-4">Patient First</h3>
+<p class="text-slate-600 dark:text-slate-300">Every decision we make prioritizes patient well-being and care quality.</p>
+</div>
+<div class="timeline-item text-center p-8 bg-white dark:bg-slate-800 rounded-3xl shadow-lg">
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-icons-round text-primary text-5xl">lightbulb</span>
+</div>
+<h3 class="text-2xl font-bold mb-4">Innovation</h3>
+<p class="text-slate-600 dark:text-slate-300">Continuously evolving with cutting-edge technology to improve healthcare delivery.</p>
+</div>
+<div class="timeline-item text-center p-8 bg-white dark:bg-slate-800 rounded-3xl shadow-lg">
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-icons-round text-primary text-5xl">security</span>
+</div>
+<h3 class="text-2xl font-bold mb-4">Security</h3>
+<p class="text-slate-600 dark:text-slate-300">Protecting patient data with enterprise-grade security and compliance standards.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 px-6 bg-gradient-to-br from-primary to-indigo-600 text-white">
+<div class="max-w-4xl mx-auto text-center">
+<h2 class="text-4xl md:text-5xl font-extrabold mb-6">Join Us in Transforming Healthcare</h2>
+<p class="text-xl mb-10 opacity-90">Experience the future of hospital management today</p>
+<a href="/login.html" class="inline-block bg-white text-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 transition-all shadow-xl">Get Started Now</a>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="py-12 px-6 bg-slate-900 text-white">
+<div class="max-w-6xl mx-auto text-center">
+<p class="text-slate-400">© 2026 MEDIHUB. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+// Scroll Animation
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.timeline-item').forEach(item => {
+    observer.observe(item);
+});
+</script>
+</body>
+</html>

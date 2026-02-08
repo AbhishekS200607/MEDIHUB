@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MEDIHUB - Care In Style, Heal In Comfort</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1e3fae",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#020617",
+                        accent: "#FF6B6B"
+                    },
+                    fontFamily: {
+                        display: ["Outfit", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                        "2xl": "1.5rem",
+                        "3xl": "2.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top left, #e0e7ff 0%, #fef2f2 30%, #ecfeff 60%, #fff 100%);
+        }
+        .dark .hero-gradient {
+            background: radial-gradient(circle at top left, #1e1b4b 0%, #450a0a 30%, #083344 60%, #020617 100%);
+        }
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translate(0,  0px); }
+            50%  { transform: translate(0, 15px); }
+            100%   { transform: translate(0, -0px); }   
+        }
+        .circular-text {
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen overflow-x-hidden">
+<div class="fixed inset-0 hero-gradient -z-10"></div>
+<div class="fixed -bottom-20 left-1/2 -translate-x-1/2 w-[140%] h-[500px] bg-primary rounded-[100%] blur-[120px] opacity-20 -z-10"></div>
+<header class="fixed top-6 left-0 right-0 z-50 px-6">
+<nav class="max-w-6xl mx-auto flex items-center justify-between glass py-3 px-8 rounded-full shadow-lg">
+<div class="flex items-center gap-3">
+<img src="https://medihub-6uz6.onrender.com/logo.png" alt="MEDIHUB Logo" class="h-10 w-10 object-contain" onerror="this.style.display='none'"/>
+<span class="font-bold text-xl tracking-tight text-primary dark:text-white uppercase">Medihub</span>
+</div>
+<div class="hidden md:flex items-center gap-1 bg-white/40 dark:bg-black/20 p-1.5 rounded-full">
+<a class="px-6 py-2 rounded-full bg-primary text-white font-medium text-sm transition-all" href="/">Home</a>
+<a class="px-6 py-2 rounded-full hover:bg-white/50 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all" href="/about.html">About</a>
+<a class="px-6 py-2 rounded-full hover:bg-white/50 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all" href="/doctor-register.html">For Doctors</a>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full hover:bg-white/50 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round">dark_mode</span>
+</button>
+<a href="/login.html" class="bg-primary text-white px-8 py-2.5 rounded-full font-semibold text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+Login
+</a>
+</div>
+</nav>
+</header>
+<main class="relative pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col items-center">
+<div class="text-center max-w-4xl mx-auto relative z-10">
+<h1 class="text-6xl md:text-8xl font-extrabold text-primary dark:text-white leading-[1.1] mb-8 drop-shadow-sm">
+                CARE IN STYLE,<br/>HEAL IN COMFORT
+            </h1>
+<p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium mb-10 max-w-2xl mx-auto">
+                Experience world-class healthcare with premium amenities and personalized attention. Your recovery journey redefined.
+            </p>
+<a href="/login.html" class="inline-flex group items-center gap-3 bg-primary text-white px-10 py-5 rounded-3xl font-bold text-lg hover:shadow-2xl hover:shadow-primary/40 transition-all">
+                Start Your Recovery
+                <span class="material-icons-round group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="relative w-full max-w-4xl h-[400px] md:h-[600px] mt-12 flex items-center justify-center pointer-events-none">
+<div class="absolute bottom-0 w-[600px] h-[300px] bg-primary rounded-[100%] opacity-90 blur-xl scale-y-50 translate-y-20"></div>
+<div class="floating relative z-20 flex flex-col items-center">
+<div class="relative">
+<div class="w-64 h-64 md:w-96 md:h-96 rounded-full border-2 border-primary/20 animate-pulse"></div>
+<div class="absolute inset-4 rounded-full border-4 border-primary/40 flex items-center justify-center">
+<span class="material-icons-round text-8xl md:text-[160px] text-primary opacity-80">biotech</span>
+</div>
+<div class="absolute top-0 right-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur p-4 rounded-2xl shadow-xl border border-white/50">
+<div class="flex items-center gap-2 text-primary font-bold">
+<span class="material-icons-round text-accent">favorite</span>
+<span>98 BPM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full flex flex-col md:flex-row justify-between items-end gap-8 mt-[-100px] relative z-30">
+<div class="glass p-6 rounded-3xl w-full max-w-md shadow-2xl">
+<div class="flex gap-4 mb-6">
+<a href="/login.html" class="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+<span class="material-icons-round text-lg">calendar_today</span>
+                        Book Visit
+                    </a>
+<button class="bg-white/50 dark:bg-white/10 text-primary dark:text-white px-5 py-2.5 rounded-full text-sm font-semibold">
+                        Emergency
+                    </button>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="col-span-2 bg-white/40 dark:bg-white/5 p-4 rounded-2xl">
+<label class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1 block">Specialty</label>
+<div class="flex items-center justify-between">
+<span class="font-medium">Cardiology</span>
+<span class="material-icons-round text-slate-400">expand_more</span>
+</div>
+</div>
+<div class="bg-white/40 dark:bg-white/5 p-4 rounded-2xl">
+<label class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1 block">Date</label>
+<div class="flex items-center justify-between">
+<span class="font-medium">24 Oct</span>
+<span class="material-icons-round text-slate-400 text-sm">event</span>
+</div>
+</div>
+<div class="bg-white/40 dark:bg-white/5 p-4 rounded-2xl">
+<label class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1 block">Time</label>
+<div class="flex items-center justify-between">
+<span class="font-medium">10:30 AM</span>
+<span class="material-icons-round text-slate-400 text-sm">schedule</span>
+</div>
+</div>
+</div>
+<a href="/login.html" class="block w-full mt-6 bg-primary text-white py-4 rounded-2xl font-bold text-center">
+<span class="inline-flex items-center gap-2">
+<span class="material-icons-round">search</span>
+                    Find Best Doctors
+</span>
+</a>
+</div>
+<div class="flex flex-col items-end gap-6">
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="circular-text w-full h-full text-accent fill-current" viewBox="0 0 100 100">
+<path d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent" id="circlePath"></path>
+<text class="uppercase tracking-widest" font-size="9" font-weight="bold">
+<textPath xlink:href="#circlePath">Better Experience • Feel Better • </textPath>
+</text>
+</svg>
+<div class="absolute bg-white dark:bg-slate-800 rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+<span class="material-icons-round text-accent">health_and_safety</span>
+</div>
+</div>
+<div class="glass p-8 rounded-[40px] shadow-xl flex items-center gap-8 border-l-8 border-l-accent">
+<div>
+<div class="text-4xl font-extrabold text-primary dark:text-white mb-1">1,250+</div>
+<p class="text-slate-500 dark:text-slate-400 font-medium text-sm">Active Patients</p>
+<div class="flex items-center gap-4 mt-6">
+<div class="flex -space-x-3">
+<img alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800" src="https://i.pravatar.cc/150?img=1"/>
+<img alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800" src="https://i.pravatar.cc/150?img=2"/>
+<img alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800" src="https://i.pravatar.cc/150?img=3"/>
+</div>
+<div class="flex items-center gap-1.5 ml-2">
+<span class="material-icons-round text-orange-400">star</span>
+<span class="font-bold text-lg">4.9</span>
+<span class="text-slate-400 font-medium">Rating</span>
+</div>
+</div>
+</div>
+<a href="/login.html" class="bg-primary w-14 h-14 rounded-3xl flex items-center justify-center text-white hover:bg-slate-800 transition-colors">
+<span class="material-icons-round text-2xl">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<div class="h-20 bg-gradient-to-t from-primary/10 to-transparent"></div>
+
+</body>
+</html>

@@ -130,7 +130,7 @@ if (document.getElementById('loginForm')) {
         } else if (profileData.user.role === 'doctor') {
           window.location.href = '/doctor.html';
         } else {
-          window.location.href = '/';
+          window.location.href = '/dashboard';
         }
       }, 1000);
     } catch (error) {
@@ -155,7 +155,7 @@ if (document.getElementById('loginForm')) {
       showToast('Registration successful!', 'success');
       
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.href = '/dashboard';
       }, 1000);
     } catch (error) {
       showToast(error.message, 'error');
@@ -169,7 +169,7 @@ if (document.getElementById('loginForm')) {
     try {
       await loginWithGoogle();
       showToast('Login successful!', 'success');
-      setTimeout(() => window.location.href = '/', 1000);
+      setTimeout(() => window.location.href = '/dashboard', 1000);
     } catch (error) {
       showToast(error.message, 'error');
       hideLoading(googleLoginBtn);
@@ -181,7 +181,7 @@ if (document.getElementById('loginForm')) {
     try {
       await loginWithGoogle();
       showToast('Registration successful!', 'success');
-      setTimeout(() => window.location.href = '/', 1000);
+      setTimeout(() => window.location.href = '/dashboard', 1000);
     } catch (error) {
       showToast(error.message, 'error');
       hideLoading(googleRegisterBtn);

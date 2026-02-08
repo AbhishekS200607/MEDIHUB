@@ -34,9 +34,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, '../frontend')));
-
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -49,8 +46,20 @@ app.use('/api/patients', apiLimiter, patientRoutes);
 app.use('/api/doctors', apiLimiter, doctorRoutes);
 app.use('/api/admin', apiLimiter, adminRoutes);
 
-// Serve frontend pages
+// Serve frontend pages (BEFORE static middleware)
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/landing.html'));
+});
+
+app.get('/landing.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/landing.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
+
+app.get('/index.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
@@ -58,13 +67,32 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/login.html'));
 });
 
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/login.html'));
+});
+
 app.get('/doctor', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/doctor.html'));
+});
+
+app.get('/doctor.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/doctor.html'));
 });
 
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/admin.html'));
 });
+
+app.get('/admin.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/admin.html'));
+});
+
+app.get('/profile.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/profile.html'));
+});
+
+// Serve static frontend files (CSS, JS, images) AFTER specific routes
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // 404 Handler
 app.use((req, res) => {
