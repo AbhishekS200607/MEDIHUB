@@ -1,5 +1,45 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables - NEVER COMMIT THESE!
 .env
 .env.local
+.env.production
+.env.development
+backend/.env
+backend/.env.local
+backend/.env.production
+
+# Firebase Service Account Keys - NEVER COMMIT!
+**/serviceAccountKey.json
+serviceAccountKey.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# Misc
+.cache/
+temp/
+tmp/

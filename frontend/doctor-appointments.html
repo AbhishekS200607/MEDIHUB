@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointments - MEDIHUB Doctor</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1e3fae",
+            "background-light": "#f6f6f8",
+            "background-dark": "#121520",
+            "success": "#10b981",
+            "danger": "#ef4444",
+          },
+          fontFamily: {"display": ["Inter", "sans-serif"]},
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-symbols-outlined { font-size: 24px; }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#121317] font-display min-h-screen">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-primary flex flex-col border-r border-primary/10 h-full">
+      <div class="p-6 flex items-center gap-3">
+        <div class="bg-white/20 p-2 rounded-lg">
+          <span class="material-symbols-outlined text-white">medical_services</span>
+        </div>
+        <h2 class="text-white text-xl font-bold tracking-tight">MEDIHUB</h2>
+      </div>
+      <div class="px-4 py-2">
+        <div class="flex items-center gap-3 px-3 py-4 bg-white/10 rounded-xl mb-6">
+          <div class="size-10 rounded-full bg-white/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white">person</span>
+          </div>
+          <div class="overflow-hidden">
+            <p class="text-white text-sm font-semibold truncate" id="userName">Dr. Loading...</p>
+            <p class="text-white/60 text-xs truncate">General Medicine</p>
+          </div>
+        </div>
+        <nav class="space-y-1">
+          <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white rounded-lg transition-colors" href="/doctor.html">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="text-sm font-medium">Dashboard</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:bg-white/10 hover:text-white rounded-lg transition-colors" href="/doctor.html">
+            <span class="material-symbols-outlined">group</span>
+            <span class="text-sm font-medium">Queue Manager</span>
+          </a>
+          <a class="flex items-center gap-3 px-4 py-3 bg-white text-primary rounded-lg transition-colors shadow-lg" href="/doctor-appointments.html">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span class="text-sm font-semibold">Appointments</span>
+          </a>
+        </nav>
+      </div>
+      <div class="mt-auto p-4 border-t border-white/10">
+        <button class="flex w-full items-center gap-3 px-4 py-3 text-white/70 hover:text-danger transition-colors" id="logoutBtn">
+          <span class="material-symbols-outlined">logout</span>
+          <span class="text-sm font-medium">Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+      <header class="bg-white border-b border-gray-200 px-8 py-4">
+        <h1 class="text-[#121317] text-2xl font-bold tracking-tight">All Appointments</h1>
+        <p class="text-gray-500 text-sm">View appointment history and statistics</p>
+      </header>
+
+      <div class="flex-1 overflow-y-auto bg-background-light p-8">
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-gray-500 text-xs font-bold uppercase">Total</span>
+              <span class="material-symbols-outlined text-gray-400">calendar_month</span>
+            </div>
+            <p class="text-3xl font-black text-slate-900" id="totalCount">0</p>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-amber-600 text-xs font-bold uppercase">Waiting</span>
+              <span class="material-symbols-outlined text-amber-400">hourglass_empty</span>
+            </div>
+            <p class="text-3xl font-black text-amber-600" id="waitingCount">0</p>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-blue-600 text-xs font-bold uppercase">Called</span>
+              <span class="material-symbols-outlined text-blue-400">notifications_active</span>
+            </div>
+            <p class="text-3xl font-black text-blue-600" id="calledCount">0</p>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-success text-xs font-bold uppercase">Completed</span>
+              <span class="material-symbols-outlined text-success">check_circle</span>
+            </div>
+            <p class="text-3xl font-black text-success" id="completedCount">0</p>
+          </div>
+        </div>
+
+        <!-- Appointments List -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="px-8 py-5 border-b border-gray-100">
+            <h3 class="text-[#121317] font-bold text-lg tracking-tight">Recent Appointments</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50/50">
+                  <th class="px-8 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Token</th>
+                  <th class="px-8 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Patient</th>
+                  <th class="px-8 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Date</th>
+                  <th class="px-8 py-4 text-xs font-black text-gray-400 uppercase tracking-widest">Time</th>
+                  <th class="px-8 py-4 text-xs font-black text-gray-400 uppercase tracking-widest text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100" id="appointmentsList">
+                <tr>
+                  <td colspan="5" class="px-8 py-8 text-center text-gray-400">Loading appointments...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module">
+    import { requireAuth, getUserProfile, logout, showToast } from './js/utils.js';
+    import { listenToQueue } from './js/appointments.js';
+
+    let unsubscribe = null;
+
+    async function init() {
+      const user = await requireAuth();
+      if (!user) return;
+
+      const profile = await getUserProfile();
+      if (!profile) return;
+
+      if (profile.role !== 'doctor') {
+        showToast('Access denied. Doctor role required.', 'error');
+        setTimeout(() => window.location.href = '/', 2000);
+        return;
+      }
+
+      document.getElementById('userName').textContent = `Dr. ${profile.name}`;
+
+      // Listen to all appointments
+      unsubscribe = listenToQueue(user.uid, (appointments) => {
+        renderAppointments(appointments);
+        updateStats(appointments);
+      });
+
+      document.getElementById('logoutBtn').addEventListener('click', logout);
+    }
+
+    function renderAppointments(appointments) {
+      const list = document.getElementById('appointmentsList');
+      
+      if (appointments.length === 0) {
+        list.innerHTML = '<tr><td colspan="5" class="px-8 py-8 text-center text-gray-400">No appointments found</td></tr>';
+        return;
+      }
+
+      list.innerHTML = appointments.map(apt => {
+        const userName = document.createElement('div');
+        userName.textContent = apt.userName;
+        const date = document.createElement('div');
+        date.textContent = apt.bookingDate;
+        const time = document.createElement('div');
+        time.textContent = apt.time;
+        const status = document.createElement('div');
+        status.textContent = apt.status;
+        
+        return `
+        <tr class="hover:bg-gray-50/50 transition-colors">
+          <td class="px-8 py-4 font-black text-gray-400 text-lg">#${apt.tokenNumber}</td>
+          <td class="px-8 py-4 text-sm font-bold text-[#121317]">${userName.textContent}</td>
+          <td class="px-8 py-4 text-sm font-medium text-gray-500">${date.textContent}</td>
+          <td class="px-8 py-4 text-sm font-medium text-gray-500">${time.textContent}</td>
+          <td class="px-8 py-4">
+            <div class="flex justify-center">
+              <span class="px-3 py-1 ${getStatusBadge(apt.status)} rounded-full text-[10px] font-black uppercase tracking-wider">${status.textContent}</span>
+            </div>
+          </td>
+        </tr>
+      `}).join('');
+    }
+
+    function updateStats(appointments) {
+      document.getElementById('totalCount').textContent = appointments.length;
+      document.getElementById('waitingCount').textContent = appointments.filter(a => a.status === 'waiting').length;
+      document.getElementById('calledCount').textContent = appointments.filter(a => a.status === 'called').length;
+      document.getElementById('completedCount').textContent = appointments.filter(a => a.status === 'completed').length;
+    }
+
+    function getStatusBadge(status) {
+      const badges = {
+        waiting: 'bg-yellow-100 text-yellow-700',
+        called: 'bg-blue-100 text-blue-700',
+        completed: 'bg-gray-100 text-gray-500',
+        cancelled: 'bg-red-100 text-red-700'
+      };
+      return badges[status] || 'bg-gray-100 text-gray-500';
+    }
+
+    init();
+  </script>
+</body>
+</html>
